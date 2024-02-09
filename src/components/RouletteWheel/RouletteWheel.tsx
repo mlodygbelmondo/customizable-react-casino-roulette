@@ -16,6 +16,7 @@ const availableWinningBets = [
 export interface IRouletteWheelProps {
   start: boolean;
   winningBet: (typeof availableWinningBets)[number];
+  customWheelNumbers?: string[];
   onSpinningEnd?: () => void;
   withAnimation?: boolean;
   addRest?: boolean;
@@ -24,17 +25,14 @@ export interface IRouletteWheelProps {
 export const RouletteWheel: FC<IRouletteWheelProps> = ({
   start,
   winningBet,
+  customWheelNumbers,
   onSpinningEnd,
   withAnimation,
   addRest,
 }) => {
-  const [wheelNumbers, setWheelNumbers] = useState<string[]>([]);
+  const wheelNumbers = customWheelNumbers ?? getWheelNumbers();
 
   const innerRef = useRef<HTMLUListElement>(null);
-
-  useEffect(() => {
-    setWheelNumbers(getWheelNumbers());
-  }, []);
 
   useEffect(() => {
     const currentInnerRef = innerRef.current;
